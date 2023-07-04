@@ -1,0 +1,194 @@
+<div class="pad-top-7">
+  <div class="sidebar">
+    <a title="Home" [routerLink]="[ '/', 'home' ]"><span class="icon-class"><i
+          class="bi bi-house-door-fill"></i></span></a>
+    <a title="SQL library" [routerLink]="[ '/', 'sql-library' ]" routerLinkActive="active"><span class="icon-class"><i
+          class="bi bi-book"></i></span></a>
+    <a class="active" title="Tables & Views" [routerLink]="[ '/', 'tables-and-views' ]" routerLinkActive="active"><span
+        class="icon-class"><i class="bi bi-collection"></i></span></a>
+    <a title="About" [routerLink]="[ '/', 'about' ]"><span class="icon-class"><i class="bi bi-people"></i></span></a>
+  </div>
+
+  <div class="content">
+    <div class="div-padding pad-left-35">
+      <div class="container-fluid">
+        <div class="row pt-2">
+          <div class="col-3">
+            <div class="pb-2">
+              <label class="menu-label" for="sqlEditor">Tables & Views</label>
+            </div>
+            <div class="pt-2 pb-2">
+              <span>
+                <select class="tables-views-dropdown-menu dropdown-menu-width" [(ngModel)]="selectedParent">
+                  <option *ngFor="let parent of masterDataObject['parent']" [ngValue]="parent['Name']">
+                    {{ parent['Name'] }}
+                  </option>
+                </select>
+              </span>
+            </div>
+            <div class="pt-3">
+              <div class="pb-3">
+                <div class="tables-views-title" *ngIf="isTablesExpanded" (click)="showHideEntities('tables', false)">
+                  <span><i class="bi bi-caret-down-fill"></i></span>&nbsp;&nbsp;&nbsp;Tables
+                </div>
+                <div class="tables-views-title" *ngIf="!isTablesExpanded" (click)="showHideEntities('tables', true)">
+                  <span><i class="bi bi-caret-right-fill"></i></span>&nbsp;&nbsp;&nbsp;Tables
+                </div>
+                <div class="pb-1 pt-2 pad-left-15" *ngIf="isTablesExpanded">
+                  <div *ngFor="let tableOrView of getSelectedTableOrViewObjectList('Table')">
+                    <span (click)="getEntityDetails('tables', tableOrView['Name'])" class="table-view-name">{{
+                      tableOrView["Name"] }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="pb-3">
+                <div class="tables-views-title" *ngIf="isViewsExpanded" (click)="showHideEntities('views', false)">
+                  <span><i class="bi bi-caret-down-fill"></i></span>&nbsp;&nbsp;&nbsp;Views
+                </div>
+                <div class="tables-views-title" *ngIf="!isViewsExpanded" (click)="showHideEntities('views', true)">
+                  <span><i class="bi bi-caret-right-fill"></i></span>&nbsp;&nbsp;&nbsp;Views
+                </div>
+                <div class="pb-1 pt-2 pad-left-15" *ngIf="isViewsExpanded">
+                  <div *ngFor="let tableOrView of getSelectedTableOrViewObjectList('View')">
+                    <span (click)="getEntityDetails('views', tableOrView['Name'])" class="table-view-name">{{
+                      tableOrView["Name"] }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="" *ngIf="showDetails">
+              <div class="">
+                <div class="details-title"> {{ selectedTableOrView["Name"] }} </div>
+                <div class="details-description pt-2"> {{ selectedTableOrView["Description"] }} </div>
+              </div>
+              <div class="pt-4" *ngIf="selectedTableOrView['details'] && selectedTableOrView['details'].length">
+                <label class="menu-label" for="sqlEditor">Details</label>
+                <ul class="pt-2">
+                  <li *ngIf="selectedTableOrView['details'][0] && selectedTableOrView['details'][0]['Schema']">Schema:
+                    {{ selectedTableOrView['details'][0]['Schema'] }}</li>
+                  <li *ngIf="selectedTableOrView['details'][0] && selectedTableOrView['details'][0]['Object owner']">
+                    Object owner: {{ selectedTableOrView['details'][0]['Schema'] }}</li>
+                  <li *ngIf="selectedTableOrView['details'][0] && selectedTableOrView['details'][0]['Object type']">
+                    Object type: {{ selectedTableOrView['details'][0]['Object type'] }}</li>
+                  <li *ngIf="selectedTableOrView['details'][0] && selectedTableOrView['details'][0]['Tablespace']">
+                    Tablespace: {{ selectedTableOrView['details'][0]['Tablespace'] }}</li>
+                </ul>
+              </div>
+              <div class="pt-4" *ngIf="selectedTableOrView['primaryKeys'] && selectedTableOrView['primaryKeys'].length">
+                <label class="menu-label" for="sqlEditor">Primary Key</label>
+                <div class="pt-1">
+                  <table class="table-fit">
+                    <thead>
+                      <tr class="table-column">
+                        <th>Name</th>
+                        <th>Columns</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let primaryKey of selectedTableOrView['primaryKeys']">
+                        <td>{{ primaryKey['Primary key name'] }}</td>
+                        <td>{{ primaryKey['Columns'] }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="pt-4" *ngIf="selectedTableOrView['columns'] && selectedTableOrView['columns'].length">
+                <label class="menu-label" for="sqlEditor">Columns</label>
+                <div class="pt-1">
+                  <table class="table-fit">
+                    <thead>
+                      <tr class="table-column">
+                        <th>Name</th>
+                        <th *ngIf="selectedTableOrView['entityType'] === 'tables'">Datatype</th>
+                        <th *ngIf="selectedTableOrView['entityType'] === 'tables'">Length</th>
+                        <th *ngIf="selectedTableOrView['entityType'] === 'tables'">Precision</th>
+                        <th *ngIf="selectedTableOrView['entityType'] === 'tables'">Not-null</th>
+                        <th *ngIf="selectedTableOrView['entityType'] === 'tables'">Comments</th>
+                        <th *ngIf="selectedTableOrView['entityType'] === 'tables'">Flexfield-mapping</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let column of selectedTableOrView['columns']">
+                        <td>{{ column['Column name'] }}</td>
+                        <td *ngIf="selectedTableOrView['entityType'] === 'tables'">{{ column['Datatype'] }}</td>
+                        <td *ngIf="selectedTableOrView['entityType'] === 'tables'">{{ column['Length'] }}</td>
+                        <td *ngIf="selectedTableOrView['entityType'] === 'tables'">{{ column['Precision'] }}</td>
+                        <td *ngIf="selectedTableOrView['entityType'] === 'tables'">{{ column['Not-null'] }}</td>
+                        <td *ngIf="selectedTableOrView['entityType'] === 'tables'">{{ column['Comments'] }}</td>
+                        <td *ngIf="selectedTableOrView['entityType'] === 'tables'">{{ column['Flexfield-mapping'] }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="pt-4" *ngIf="selectedTableOrView['foreignKeys'] && selectedTableOrView['foreignKeys'].length">
+                <label class="menu-label" for="sqlEditor">Foreign Keys</label>
+                <div class="pt-1">
+                  <table class="table-fit">
+                    <thead>
+                      <tr class="table-column">
+                        <th>Table</th>
+                        <th>Foreign Table</th>
+                        <th>Foreign Key Column</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let foreignKey of selectedTableOrView['foreignKeys']">
+                        <td>{{ foreignKey['Table'] }}</td>
+                        <td>{{ foreignKey['Foreign Table'] }}</td>
+                        <td>{{ foreignKey['Foreign Key Column'] }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="pt-4" *ngIf="selectedTableOrView['indexes'] && selectedTableOrView['indexes'].length">
+                <label class="menu-label" for="sqlEditor">Indexes</label>
+                <div class="pt-1">
+                  <table class="table-fit">
+                    <thead>
+                      <tr class="table-column">
+                        <th>Index</th>
+                        <th>Uniqueness</th>
+                        <th>Tablespace</th>
+                        <th>Columns</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let index of selectedTableOrView['indexes']">
+                        <td>{{ index['Index'] }}</td>
+                        <td>{{ index['Uniqueness'] }}</td>
+                        <td>{{ index['Tablespace'] }}</td>
+                        <td>{{ index['Columns'] }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="pt-4" *ngIf="selectedTableOrView['query'] && selectedTableOrView['query'].length">
+                <label class="menu-label" for="sqlEditor">Query</label>
+                <div class="pt-1">
+                  <table class="table-fit">
+                    <thead>
+                      <tr class="table-column">
+                        <th>SQL_Statement</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let query of selectedTableOrView['query']">
+                        <td>{{ query['SQL_Statement'] }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

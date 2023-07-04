@@ -1,0 +1,270 @@
+<div class="pad-top-7">
+  <div class="sidebar">
+    <a class="active" href="#home" title="Home"><span class="icon-class"><i
+          class="bi bi-house-door-fill"></i></span></a>
+    <a title="SQL library" [routerLink]="[ '/', 'sql-library' ]" routerLinkActive="active"><span class="icon-class"><i
+          class="bi bi-book"></i></span></a>
+    <a title="Tables & Views" [routerLink]="[ '/', 'tables-and-views' ]" routerLinkActive="active"><span
+        class="icon-class"><i class="bi bi-collection"></i></span></a>
+    <a title="About" [routerLink]="[ '/', 'about' ]"><span class="icon-class"><i class="bi bi-people"></i></span></a>
+  </div>
+
+  <div class="content">
+    <div class="div-padding">
+      <!-- <div *ngIf="!getIsConnected()">
+        <button type="button" (click)="connect()">Connect</button>
+        <button type="button" class="btn btn-primary" (click)="connect()">Connect</button>
+      </div>
+    
+      <div *ngIf="getIsConnected()">
+        <label type="text">Connected</label>
+        <button type="button" class="btn btn-lg btn-primary" disabled>Connected</button>
+      </div> -->
+
+      <!-- <div class="">
+        <button type="button" (click)="execute()">Execute</button>
+        <button type="button" class="btn btn-secondary" (click)="execute()">Execute</button>
+      </div> -->
+
+      <div class="">
+        <span>
+          <label class="menu-label" for="fetchCount">Fetch count</label>
+        </span>
+        <span>
+          <select class="dropdown-menu-pages" [(ngModel)]="fetchCount">
+            <option *ngFor="let page1 of pageSizeList" [ngValue]="page1">
+              {{ page1 }}
+            </option>
+          </select>
+        </span>
+        <span class="margin-left-1"><button type="button" class="btn btn-success btn-sm" (click)="execute()"
+            title="Execute"><span><i class="bi bi-play-btn"></i></span></button></span>
+        <span class="margin-left-1"><button type="button" class="btn btn-primary btn-sm" (click)="save()"
+            title="Save"><span><i class="bi bi-save"></i></span></button></span>
+        <span *ngIf="saveButtonClicked" class="sql-saved-message">SQL saved successfully</span>
+      </div>
+
+      <div class="mt-3 title-class">
+        <label class="div-bar-title" for="sqlEditor"><span><i class="bi bi-pencil-square"></i>&nbsp;&nbsp;</span>SQL
+          editor</label>
+      </div>
+
+      <div class="pt-2">
+        <!-- <textarea class="form-control text-area input-text" type="text" id="customerTextInfo" [value]="query"
+          (input)="query = $event.target.value;" placeholder="Please enter your query here"></textarea> -->
+
+        <div contenteditable="true" class="form-control text-area input-text" type="text" id="sql-query-text"
+          placeholder="Please enter your query here"
+          [innerHTML]="getInnerHTML()"
+          [textContent]="query" (input)="query = $event.target.textContent"
+          (keyup)="checkTypedWordsInSQLEditor($event)">
+        </div>
+
+        <!-- (keyup)="checkTypedWordsInSQLEditor($event)" -->
+
+        <!-- <app-textarea-highlight [(ngModel)]="query" [highlightTexts]="highlightTexts"></app-textarea-highlight> -->
+
+      </div>
+
+      <div class="mt-4 title-class" *ngIf="loadingData && !showNoRecordsFoundMessage">
+        <label class="div-bar-title" for="sqlEditor"><span><i
+              class="bi bi-hourglass-split"></i>&nbsp;&nbsp;</span>Please wait, loading data...</label>
+      </div>
+
+      <div class="mt-4 title-class" *ngIf="showNoRecordsFoundMessage && !errorMessage">
+        <label class="div-bar-title" for="sqlEditor"><span><i class="bi bi-x-circle"></i>&nbsp;&nbsp;</span>No records
+          found</label>
+      </div>
+
+      <div class="mt-4 title-class error-message" *ngIf="errorMessage || errorMessageCode">
+        <label *ngIf="errorMessage" class="div-bar-title" for="sqlEditor"><span><i
+              class="bi bi-exclamation-triangle"></i>&nbsp;&nbsp;</span>{{ errorMessage }}</label>
+        <label *ngIf="errorMessageCode" class="div-bar-title" for="sqlEditor"><span><i
+              class="bi bi-exclamation-triangle"></i>&nbsp;&nbsp;</span>{{ errorMessageCode }}</label>
+      </div>
+
+      <div class="top-padding-3" *ngIf="isQueryExecuted && rowData && rowData[0]">
+        <!-- <button type="button" (click)="execute()">CSV</button> -->
+        <!-- <button class="margin-left-5" type="button" (click)="execute()">Excel</button> -->
+        <button type="button" class="btn btn-primary btn-sm" (click)="downloadDataInCSVFile()"
+          title="Download CSV">CSV</button>
+        <button type="button" class="btn btn-primary btn-sm margin-left-5" (click)="downloadDataInExcelFile()"
+          title="Download Excel">Excel</button>
+      </div>
+
+      <div class="mt-4 title-class" *ngIf="isQueryExecuted && rowData && rowData[0]">
+        <label class="div-bar-title" for="sqlEditor"><span><i class="bi bi-table"></i>&nbsp;&nbsp;</span>SQL execution
+          results</label>
+        <span class="right-align">
+          <label class="div-bar-title" for="sqlEditor"><span><i class="bi bi-clock"></i>&nbsp;&nbsp;</span>SQL execution
+            time (in seconds)&nbsp;&nbsp;&nbsp;</label><span class="pl-2 div-bar-sub-title">{{
+            timeRequiredToExecuteQuery }}&nbsp;&nbsp;&nbsp;</span>
+        </span>
+      </div>
+
+      <div class="pt-2" *ngIf="isQueryExecuted && rowData && rowData[0]">
+        <!-- <table>
+          <thead>
+            <th>Groups Name</th>
+            <th>Groups Items</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let res of resData">
+              <td *ngFor="let res of res">{{group.name}}</td>
+            </tr>
+          </tbody>
+        </table> -->
+
+        <!-- <table>
+          <ng-container *ngFor="let res of resData">
+            <tr>
+              <td>
+                <h2>{{ Object.keys(res) }}</h2>
+              </td>
+            </tr>
+            <tr *ngFor="let res1 in res">
+              <td>{{res1}}</td>
+            </tr>
+          </ng-container>
+        </table> -->
+
+        <!-- <table>
+          <thead>
+            <th *ngFor="let column of columnNames">
+              {{ column }}
+            </th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of rowData">
+              <td>{{row}}</td>
+            </tr>
+          </tbody>
+        </table> -->
+
+        <div class="scrollbar-class">
+          <table class="table-fit">
+            <thead>
+              <tr class="table-column">
+                <th *ngFor="let head of rowData[0] | keys">{{head}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of rowData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                <td *ngFor="let list of item | keys">{{item[list]}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="pt-3" *ngIf="isQueryExecuted && rowData && rowData.length">
+            <ngb-pagination [collectionSize]="rowData.length" [(page)]="page" [maxSize]="pageSize" [rotate]="true"
+              [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+          </div>
+
+        </div>
+
+        <!-- <div class="pb-2" *ngIf="isQueryExecuted && rowData && rowData.length">
+          <span>
+            <label class="menu-label" for="companyName"> Number of records on a page: </label>
+          </span>
+          <span>
+            <select class="dropdown-menu-pages" [(ngModel)]="pageSize">
+              <option *ngFor="let page1 of pageSizeList" [ngValue]="page1">
+                {{ page1 }}
+              </option>
+            </select>
+          </span>
+        </div> -->
+
+        <!-- <div class="row">
+          <div class="col-xs-12 col-12">
+            <pagination [totalItems]="totalItems" [(ngModel)]="currentPage">
+            </pagination>
+          </div>
+        </div> -->
+
+        <!-- <ngb-pagination [collectionSize]="70" [(page)]="page" [boundaryLinks]="false">
+        </ngb-pagination> -->
+
+        <!-- <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="rowData.length"></ngb-pagination> -->
+
+        <!-- <ngb-pagination [collectionSize]="3" [(page)]="page" aria-label="Default pagination"></ngb-pagination> -->
+
+        <!-- <div class="d-flex justify-content-between p-2">
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+            (pageChange)="getPremiumData();">
+          </ngb-pagination>
+        
+          <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="getPremiumData();">
+            <option [ngValue]="2">2 items per page</option>
+            <option [ngValue]="4">4 items per page</option>
+            <option [ngValue]="6">6 items per page</option>
+          </select>
+        </div> -->
+
+        <!-- <ngb-pagination [collectionSize]="totalItems" [pageSize]="itemsPerPage" [(page)]="page" [maxSize]="7" [rotate]="true" (pageChange)="loadPage($event)"></ngb-pagination> -->
+
+        <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+
+        <!-- <app-custom-pagination (pageChange)="page = $event" id="1"
+                          maxSize="5"
+                          directionLinks="true"
+                          autoHide="true">   </app-custom-pagination> -->
+
+        <!-- <table border="1">
+          <thead>
+            <tr>
+              <th *ngFor="let header of _object.keys(rowData[0]); let i = index">{{header}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of rowData; let i = index">
+              <th *ngFor="let objKey of _object.keys(row); let j = index">{{ row[objKey] }} </th>
+            </tr>
+          </tbody>
+        </table> -->
+
+      </div>
+
+      <div class="top-padding-3" *ngIf="isQueryExecuted && false">
+        <table>
+          <tr>
+            <th>Company</th>
+            <th>Contact</th>
+            <th>Country</th>
+          </tr>
+          <tr>
+            <td>Alfreds Futterkiste</td>
+            <td>Maria Anders</td>
+            <td>Germany</td>
+          </tr>
+          <tr>
+            <td>Centro comercial Moctezuma</td>
+            <td>Francisco Chang</td>
+            <td>Mexico</td>
+          </tr>
+          <tr>
+            <td>Ernst Handel</td>
+            <td>Roland Mendel</td>
+            <td>Austria</td>
+          </tr>
+          <tr>
+            <td>Island Trading</td>
+            <td>Helen Bennett</td>
+            <td>UK</td>
+          </tr>
+          <tr>
+            <td>Laughing Bacchus Winecellars</td>
+            <td>Yoshi Tannamuri</td>
+            <td>Canada</td>
+          </tr>
+          <tr>
+            <td>Magazzini Alimentari Riuniti</td>
+            <td>Giovanni Rovelli</td>
+            <td>Italy</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- <app-dialog-body [connectionObject]="connectionObject"></app-dialog-body> -->
+  </div>
+</div>

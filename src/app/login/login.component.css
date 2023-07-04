@@ -1,0 +1,47 @@
+
+    .form-style input{
+        border-color: rgb(226, 226, 226);
+        height:50px;
+        border-radius:25px;
+    /* border-bottom:1px solid #ebebeb;	 */
+    }
+    .form-style input:focus{
+    /* border-bottom:1px solid darkgray;	 */
+    box-shadow:none;
+    outline:0;
+    background-color:#ebebeb;	
+    }
+    .sideline {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color:#ccc;
+    }
+    button{
+    height:50px;	
+    }
+    .sideline:before,
+    .sideline:after {
+        content: '';
+        border-top: 1px solid #ebebeb;
+        margin: 0 20px 0 0;
+        flex: 1 0 20px;
+    }
+    
+    .sideline:after {
+        margin: 0 0 0 20px;
+    }
+
+
+    ::ng-deep .warning{
+        background:#005994 ;
+        color: white;
+        text-align: center;
+        border: 1px solid white;
+     }
+
+    ::ng-deep .warning button {
+        color: white !important;
+    }

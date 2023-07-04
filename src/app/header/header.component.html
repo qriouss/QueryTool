@@ -1,0 +1,32 @@
+<div class="header-class">
+    <div class="title-class">
+        <!-- <span><i class="bi bi-border-outer"></i></span> -->
+        <!-- SQL query development app -->
+        <!-- <span class="web-page-title">Oracle Fusion SQL processor</span> -->
+        <img src="assets/Images/logo.png" class="img-fluid" />
+        <span class="web-page-title">Cloud Query Workcenter</span>
+        <!-- <span [routerLink]="[ '/', 'login' ]" class="btnConnect pad-left-2"><button type="button" class="btn btn-outline-light btn-sm" title="Signout"><span class=""><i class="bi bi-box-arrow-right"></i></span></button></span> -->
+        <span (click)="logout()" class="btnConnect pad-left-2"><button type="button" class="btn btn-outline-light btn-sm" title="Signout"><span class=""><i class="bi bi-box-arrow-right"></i></span></button></span>
+        
+        <span class="btnConnect pad-left-2 user-logo" title="Welcome {{ loggedInUserName }} !!!"><i class="bi bi-person-circle user-photo"></i></span>
+        
+        <!-- <select class="connect-dropdown dropdown-font" (click)="connect()" [(ngModel)]="selectedConnection">
+            <option class="dropdown-font" [value]="Add connection">Add connection</option>
+        </select> -->
+
+        <select class="connect-dropdown dropdown-font" [(ngModel)]="selectedConnection" (change)="connect()" (click)="getExistingConnections()">
+            <option class="dropdown-font" [ngValue]="option" *ngFor="let option of connectOptions; let i = index">
+                {{ option }}
+            </option>
+            <option class="dropdown-font" [ngValue]="savedOption" *ngFor="let savedOption of savedConnectOptions; let i = index">
+                {{ savedOption["connectionName"] }}
+            </option>
+        </select>
+
+        <!-- <span *ngIf="!getIsConnected()" class="btnConnect"><button type="button" class="btn btn-outline-light btn-sm"><span class=""><i class="bi bi-plug"></i></span>Connect</button></span> -->
+        <span *ngIf="!getIsConnected()" class="btnConnect"><button type="button" class="btn btn-outline-light btn-sm" disabled><span class=""><i class="bi bi-plug"></i></span> Connect</button></span>
+        <span *ngIf="getIsConnected()" title="{{ connectionName }}" class="btnConnect"><button type="button" class="btn btn-outline-light btn-sm" disabled><span class=""><i class="bi bi-check"></i></span> {{ connectionName }}</button></span>
+
+        
+    </div>
+</div>

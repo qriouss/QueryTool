@@ -1,0 +1,41 @@
+<div class="pad-top-7">
+  <div class="sidebar">
+      <a title="Home" [routerLink]="[ '/', 'home' ]"><span class="icon-class"><i class="bi bi-house-door-fill"></i></span></a>
+      <a class="active" title="SQL library" [routerLink]="[ '/', 'sql-library' ]" routerLinkActive="active"><span class="icon-class"><i class="bi bi-book"></i></span></a>
+      <a title="Tables & Views" [routerLink]="[ '/', 'tables-and-views' ]" routerLinkActive="active"><span class="icon-class"><i class="bi bi-collection"></i></span></a>
+      <a title="About" [routerLink]="[ '/', 'about' ]"><span class="icon-class"><i class="bi bi-people"></i></span></a>
+    </div>
+    
+    <div class="content">
+        <div class="div-padding">
+            <div class="pb-2">
+                <label class="menu-label" for="sqlEditor">SQL library</label>
+              </div>
+        <table class="table-fit" *ngIf="!showNoRecordsFoundMessage">
+            <tr class="table-column">
+              <th>Query</th>
+              <th>User name</th>
+            </tr>
+            <!-- <tr>
+              <td>select * from abc;</td>
+              <td>Maria Anders</td>
+            </tr>
+            <tr>
+              <td>update xyz set t1 = 0</td>
+              <td>Francisco Chang</td>
+            </tr> -->
+
+            <tr *ngFor="let row of sqlQueryObjectList">
+              <td>{{ row["sqlQuery"]}}</td>
+              <td>{{ row["userName"]}}</td>
+            </tr>
+
+          </table>
+        </div>
+  
+        <div class="title-class" *ngIf="showNoRecordsFoundMessage">
+          <label class="div-bar-title" for="sqlEditor"><span><i class="bi bi-x-circle"></i>&nbsp;&nbsp;</span>No records found</label>
+        </div>
+
+    </div>
+  </div>

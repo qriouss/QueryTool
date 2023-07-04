@@ -1,0 +1,5 @@
+@import '../sql-query-editor/sql-query-editor.component.css';
+
+.img-fluid {
+    height: 250px;
+}

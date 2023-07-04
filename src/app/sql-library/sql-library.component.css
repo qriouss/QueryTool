@@ -1,0 +1,11 @@
+@import '../sql-query-editor/sql-query-editor.component.css';
+
+.title-class {
+    background-color: #2a87c0;
+    height: 13%;
+    padding: 0.25%;
+    border-radius: 5px;
+    padding-left: 1%;
+    margin-left: 4%;
+    margin-top: -3%;
+}

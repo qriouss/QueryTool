@@ -1,0 +1,65 @@
+@import '../sql-query-editor/sql-query-editor.component.css';
+
+.tables-views-dropdown-menu {
+    height: 1.875em;
+      /* font-size: 0.875em; */
+      border: 0.063em solid #919191;
+      border-radius: 0.25em;
+      color: #3C3C3C;
+      padding-left: 1%;
+      /* width: 18em; */
+      /* padding-top: 0%; */
+      padding-right: 1%;
+      cursor: pointer;
+  }
+
+.plus-minus-icon-class {
+    cursor: pointer;
+}
+
+.entity-div-class {
+  border: 1px solid #2a87c0;
+    border-radius: 5px;
+    padding: 1%;
+}
+
+.table-view-name {
+  font-size: 0.85em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.table-view-name:hover {
+  text-decoration: underline;
+}
+
+.details-title {
+  font-size: 1em;
+  font-weight: bold;
+  font-family: Arial;
+}
+
+.details-description {
+  font-size: 0.9em;
+  font-family: Arial;
+}
+
+.tables-views-title {
+  font-size: 1.000em;
+  font-weight: bold;
+  font-family: Arial;
+  cursor: pointer;
+}
+
+.dropdown-menu-width {
+  width: 65%;
+}
+
+.pad-left-15 {
+  padding-left: 15%;
+}
+
+.pad-left-35 {
+  padding-left: 3.5%;
+}

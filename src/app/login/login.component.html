@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 d-none d-md-block ">
+      <img src="assets/Images/Login2.png" class="img-fluid" style="position: fixed;top: 0;right: 0;" />
+    </div>
+    <div class="col-md-4 p-4 " style="margin-top: 200px;     z-index: 9;">
+      <div class="form-style ">
+        <form #basicForm="ngForm" (ngSubmit)="loginUser(basicForm.value)">
+          <div class="form-group pb-3 ">
+            <h3 style="color:#005994  ;">Email</h3>
+            <input type="email" placeholder="Username" ngModel class="form-control" name="email" required>
+          </div>
+          <div class="form-group pb-3">
+            <h3 style="color:#005994  ;">Password</h3>
+            <input type="password" placeholder="Password" ngModel class="form-control" name="password" required>
+          
+            <a style="color:#005994  ;float: right;"(click)="openForgotPassword()"onmouseover="this.style.cursor='pointer'">
+              
+              <h3 >Forgot password?</h3>
+            </a>
+
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+
+          </div>
+          <div class="pb-2">
+            <button style="background-color: #005994 ;border:0;border-radius: 25px;" type="submit"
+              class="btn btn-dark w-100 font-weight-bold mt-2" [disabled]="basicForm.form.invalid" >Sign In</button>
+          </div>
+        </form>
+
+
+      </div>
+
+    </div>
+  </div>
+</div>

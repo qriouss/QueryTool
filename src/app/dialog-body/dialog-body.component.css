@@ -1,0 +1,39 @@
+.header-text {
+	background-color: #2a87c0;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #fff;
+	margin-top: -5%;
+    margin-left: -8%;
+    margin-right: -8%;
+	padding-left: 3%;
+}
+
+.input-text-header {
+	font-size: 1em;
+    font-weight: bold;
+    color: #3C3C3C;
+    font-family: Arial;
+}
+
+.input-text {
+	font-size: 0.75em;
+	color: #3C3C3C;
+	width: 100%;
+	font-family: Arial;
+}
+
+.close-icon {
+	float: right;
+    padding-right: 2%;
+    cursor: pointer;
+}
+
+.mat-dialog-content {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.margin-left-5 {
+    margin-left: 5%;
+}
